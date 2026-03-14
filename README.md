@@ -6,4 +6,4 @@ Esta  es una web sencilla que transforma cadenas de texto y URLs y las convierte
 Ingrese a la web *iamandydev.github.io/qr-code/*, ingrese su URL en el campo de texto y de click al botón 'generar'.
 
 ![](./imgs/image2.png)
-En la parte inmetiatamente aparecerá debajo el QR Code generado, junto con el botón de descarga.
+Inmetiatamente aparecerá debajo el QR Code generado, junto con el botón de descarga.
