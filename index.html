@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <img id="qr-code-img" src="" alt="">
+    <input type="text" id="" placeholder="Enter text or URL">
+    <button class="generate-btn">run</button>
+    <script>
+
+        const qrCodeImg = document.getElementById("qr-code-img");
+        const imput = document.querySelector("input");
+        const generateBtn = document.querySelector(".generate-btn");
+
+        
+        function generateQrCode(params) {
+            const imputValue = imput.value;
+            if (imputValue === "") {
+                alert("Input cannot be empty");
+                qrCodeImg.style.marginBottom = "0";
+                return;
+            }
+
+            qrCodeImg.src = 'https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=' + encodeURIComponent(imputValue);
+            qrCodeImg.style.marginBottom = "40px";
+        }
+        generateBtn.addEventListener("click", generateQrCode);
+    </script>
+</body>
+</html>
