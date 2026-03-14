@@ -1,33 +1,87 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QR Code</title>
+    <link rel="stylesheet" href="public/css/style.css" />
+
+    <!-- google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Luxurious+Script&display=swap" rel="stylesheet" />
+
+    <!-- fontawesome icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- animations -->
+     <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
 </head>
+
 <body>
-    <img id="qr-code-img" src="" alt="">
-    <input type="text" id="" placeholder="Enter text or URL">
-    <button class="generate-btn">run</button>
+    <!-- main content -->
+    <main>
+        <h1><span class="script-regular">QR Code</span> Generator</h1>
+
+        <!-- center box -->
+        <article>
+
+            <form class="large">
+                <input type="text" class="large" id="" placeholder="Enter text or URL" />
+                <button type="submit" class="btn large generate-btn" id="submit">
+                    <p><i class="fa-solid fa-arrows-rotate"></i> Generate</p>
+                </button>
+            </form>
+
+            <!-- skeleton for QR image -->
+            <img class="animate__animated animate__backInDown" id="qr-code-img" src="" />
+            <a class="download-btn disable" href="" download="qr-code.png">
+                <button class="btn large download-btn" id="downloadBtn">
+                    <p><i class="fa-regular fa-circle-down"></i> Download</p>
+                </button>
+            </a>
+        </article>
+
+        <!-- Author -->
+        <p>create By <span class="script-regular">Andy.Dev</span></p>
+    </main>
+
     <script>
-
+        const input = document.querySelector("input");
         const qrCodeImg = document.getElementById("qr-code-img");
-        const imput = document.querySelector("input");
         const generateBtn = document.querySelector(".generate-btn");
+        const downloadBtn = document.querySelector(".download-btn");
 
-        
-        function generateQrCode(params) {
-            const imputValue = imput.value;
-            if (imputValue === "") {
+        async function generateQrCode() {
+            const inputValue = input.value;
+            if (inputValue === "") {
                 alert("Input cannot be empty");
-                qrCodeImg.style.marginBottom = "0";
                 return;
             }
 
-            qrCodeImg.src = 'https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=' + encodeURIComponent(imputValue);
-            qrCodeImg.style.marginBottom = "40px";
+            qrSource = "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" + encodeURIComponent(inputValue);
+            qrCodeImg.src = qrSource;
+            qrCodeImg.style.marginTop = "40px";
+
+            response = await fetch(qrSource);
+            blob = await response.blob();
+            url = URL.createObjectURL(blob);
+
+            downloadBtn.href = url;
+            qrCodeImg.classList.remove("disable");
+            downloadBtn.classList.remove("disable");
         }
-        generateBtn.addEventListener("click", generateQrCode);
+        
+        generateBtn.addEventListener("click", function (event) {
+            event.preventDefault();
+            generateQrCode();
+        });
     </script>
 </body>
 </html>
